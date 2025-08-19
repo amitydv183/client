@@ -15,7 +15,11 @@ function Coursedetils() {
   // 📦 Fetch course details
   const fetchCourse = async () => {
     try {
-      const res = await API.get(`/courseview/${id}`, { withCredentials: true });
+      const res = await API.post(
+        `/booking/create/${id}`,
+        {},
+        { withCredentials: true }
+      );
       setCourse(res.data);
     } catch (error) {
       console.log(error);
