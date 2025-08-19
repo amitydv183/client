@@ -16,7 +16,6 @@ function Login() {
         const user = res.data; // ✅ define user from response
         localStorage.setItem("user", JSON.stringify(user));
 
-        document.cookie = `token=${user.token}; path=/; secure; samesite=strict`;
         alert("login successful");
         navigate("/");
       } else {
