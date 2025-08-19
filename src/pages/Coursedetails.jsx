@@ -6,7 +6,7 @@ function Coursedetils() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [course, setCourse] = useState(null);
-  const[loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
   // ✅ Check login status from "user" in localStorage
   const user = JSON.parse(localStorage.getItem("user"));
@@ -27,35 +27,34 @@ function Coursedetils() {
   }, [id]);
 
   // 🎯 Book Now handler
-  const handleBookNow = async() => {
-    if(!isLoggedIn){
+  const handleBookNow = async () => {
+    if (!isLoggedIn) {
       navigate("/login");
       return;
     }
-    try{
+    try {
       setLoading(true);
-      const res= await API.post(
+      const res = await API.post(
         `/booking/create/${id}`,
         {},
         {
-          // headers:{
-          //   Authorization:`Bearer ${ user,token}`,
-          // },
+          headers: {
+            Authorization: `Bearer ${(user, token)}`,
+          },
         }
       );
-      if(res.data.booking){
+      if (res.data.booking) {
         alert("Booking successful!");
         navigate("/mybooking");
-      }else{
+      } else {
         alert(res.data.message || "Booking Failed");
       }
-    }catch(err){
+    } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "something went wrong");
-    }finally{
+    } finally {
       setLoading(false);
     }
-  
   };
 
   if (!course) {
@@ -87,13 +86,15 @@ function Coursedetils() {
             </p>
 
             <button
-             className="btn btn-success"
+              className="btn btn-success"
               onClick={handleBookNow}
               disabled={loading}
             >
-              {loading ? "Booking...":isLoggedIn ?"Book Now": "Login to Book"}
-
-             
+              {loading
+                ? "Booking..."
+                : isLoggedIn
+                ? "Book Now"
+                : "Login to Book"}
             </button>
           </div>
         </div>
@@ -102,4 +103,4 @@ function Coursedetils() {
   );
 }
 
-export default Coursedetils
+export default Coursedetils;
