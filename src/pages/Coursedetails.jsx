@@ -15,14 +15,10 @@ function Coursedetils() {
   // 📦 Fetch course details
   const fetchCourse = async () => {
     try {
-      const res = await API.get(`/course/view/${id}`, {
-        headers: {
-          Authorization: `Bearer ${user?.token}`,
-        },
-      });
+      const res = await API.get(`/courseview/${id}`, { withCredentials: true });
       setCourse(res.data);
     } catch (error) {
-      console.error("Error fetching course:", error);
+      console.log(error);
     }
   };
 
