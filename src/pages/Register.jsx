@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // navigation ke liye
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 function Register() {
@@ -9,11 +9,12 @@ function Register() {
     name: "",
     email: "",
     password: "",
+    secret: "", // 👈 secret code for admin
   });
 
   const [message, setMessage] = useState("");
 
-  // Input change handle
+  // Input change handler
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -21,23 +22,23 @@ function Register() {
     });
   };
 
-  // Form submit handle
+  // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await API.post("/register", formData);
-      setMessage(res.data.message || "Registration successful!");
+      setMessage(res.data.msg || "Registration successful!");
 
-      // Form reset
-      setFormData({ name: "", email: "", password: "" });
+      // Reset form
+      setFormData({ name: "", email: "", password: "", secret: "" });
 
-      // 1 second ke delay ke baad login page par bhejna
+      // Redirect to login after 1 second
       setTimeout(() => {
         navigate("/login");
       }, 1000);
     } catch (err) {
       setMessage(
-        err.response?.data?.message || "Something went wrong, please try again."
+        err.response?.data?.msg || "Something went wrong, please try again."
       );
     }
   };
@@ -54,7 +55,7 @@ function Register() {
             type="text"
             className="form-control"
             name="name"
-           
+            value={formData.name}
             onChange={handleChange}
             required
           />
@@ -83,6 +84,19 @@ function Register() {
             value={formData.password}
             onChange={handleChange}
             required
+          />
+        </div>
+
+        {/* Secret Code */}
+        <div className="mb-3">
+          <label className="form-label">Secret Code (For Admin Only)</label>
+          <input
+            type="text"
+            className="form-control"
+            name="secret"
+            value={formData.secret}
+            onChange={handleChange}
+            placeholder="Leave empty if student"
           />
         </div>
 
