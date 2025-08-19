@@ -17,7 +17,7 @@ function Coursedetils() {
     try {
       const res = await API.post(
         `/booking/create/${id}`,
-        {},
+
         { withCredentials: true }
       );
       setCourse(res.data);
