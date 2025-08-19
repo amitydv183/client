@@ -13,9 +13,7 @@ function Login() {
     try {
       const res = await API.post("/Login", { email, password });
       if (res.data.message === "Login successful") {
-        const user = res.data; // ✅ define user from response
-        localStorage.setItem("user", JSON.stringify(user));
-
+        localStorage.setItem("user", JSON.stringify(res.data));
         alert("login successful");
         navigate("/");
       } else {
