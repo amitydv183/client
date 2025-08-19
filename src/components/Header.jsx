@@ -30,7 +30,7 @@ function Header() {
               <Link className="nav-link text-white" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/courses">Courses</Link>
+              <Link className="nav-link text-white" to="/course">Courses</Link>
             </li>
 
             {user && user.role === "student" && (
